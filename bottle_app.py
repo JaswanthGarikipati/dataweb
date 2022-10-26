@@ -2,24 +2,34 @@
 # A very simple Bottle Hello World app for you to get started with...
 from bottle import default_app, route, get, post, template, request, redirect
 import sqlite3
+import database
 
 connection = sqlite3.connect("shopping_list.db")
 
-@route('/')
-def hello_world():
-    return 'Hello from Jaswanth G!'
-
-@route('/bye')
-def bye_world():
-    return 'Bye from Jaswanth G!'
-
-@route('/list')
-def get_list():
+'''<moved to database.py>def get_items():
     cursor = connection.cursor()
     rows = cursor.execute("select id, description from list")
     rows = list(rows)
-    rows = [ {'id':row[0] ,'desc':row[1]} for row in rows ]
-    return template("shopping_list.tpl", name = "Jaswanth G", shopping_list=rows)
+    items = [ {'id':row[0] ,'desc':row[1]} for row in rows ]
+    return items
+
+def add_items(description):
+    cursor = connection.cursor()
+    cursor.execute(f"insert into list (description) values ('{description}')")
+    connection.commit()'''
+
+@route('/')
+def get_index():
+    redirect("/list")
+
+@route('/list')
+def get_list():
+    #cursor = connection.cursor()
+    #rows = cursor.execute("select id, description from list")
+    #rows = list(rows)
+    #rows = [ {'id':row[0] ,'desc':row[1]} for row in rows ]
+    items=database.get_items()
+    return template("shopping_list.tpl", name = "Jaswanth G", shopping_list=items)
 
 @get('/add')
 def get_add():
@@ -28,16 +38,18 @@ def get_add():
 @post('/add')
 def post_add():
     description = request.forms.get("description")
-    cursor = connection.cursor()
-    cursor.execute(f"insert into list (description) values ('{description}')")
-    connection.commit()
+    database.add_item(description)
+    #cursor = connection.cursor()
+    #cursor.execute(f"insert into list (description) values ('{description}')")
+    #connection.commit()
     redirect('/list')
 
 @route('/delete/<id>')
 def get_delete(id):
-    cursor = connection.cursor()
+    '''cursor = connection.cursor()
     cursor.execute(f"delete from list where id={id}")
-    connection.commit()
+    connection.commit()'''
+    database.delete_item(id)
     redirect('/list')
 
 @get('/edit/<id>')
