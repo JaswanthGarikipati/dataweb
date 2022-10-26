@@ -10,10 +10,10 @@ except:
 
 cursor.execute("create table list (id integer primary key, description text)")
 
-cursor.execute("insert into list (description) values ('apples')")
-cursor.execute("insert into list (description) values ('broccoli')")
-cursor.execute("insert into list (description) values('pizza')")
-cursor.execute("insert into list (description) values ('tangerine')")
-cursor.execute("insert into list (description) values ('potatoes')")
+cursor.execute("insert into list (description) values ('Grapes')")
+cursor.execute("insert into list (description) values ('Strawberry')")
+cursor.execute("insert into list (description) values('Blueberry')")
+cursor.execute("insert into list (description) values ('Raspberry')")
+cursor.execute("insert into list (description) values ('Tomatoes')")
 connection.commit()
 connection.close()
