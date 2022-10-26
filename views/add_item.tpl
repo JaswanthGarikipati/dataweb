@@ -1,3 +1,5 @@
+<!-- added this page to shopping_list.db -->
+
 <html>
 <body>
 <hr/>
