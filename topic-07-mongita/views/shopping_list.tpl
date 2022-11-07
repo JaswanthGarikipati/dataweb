@@ -1,13 +1,13 @@
 <html>
 <body>
-<h2>Shopping list for <b>PEEWEE</b></h2>
+<h2>Shopping List</h2>
 <hr/>
 <table>
 % for item in shopping_list:
   <tr>
     <td>{{str(item['description'])}}</td>
-    <td><a href="/edit/{{str(item['id'])}}">EDIT</a></td>
-    <td><a href="/delete/{{str(item['id'])}}">DELETE</a></td>
+    <td><a href="/edit/{{str(item['id'])}}">edit</a></td>
+    <td><a href="/delete/{{str(item['id'])}}">delete</a></td>
   </tr>
 % end
 </table>

@@ -1,6 +1,6 @@
 from bottle import default_app, route, get, post, template, request, redirect
 
-from mongita_database import get_items , add_item, delete_item, update_item
+from peewee_database import get_items, add_item, delete_item, update_item
 
 @route('/')
 def get_index():
@@ -15,10 +15,10 @@ def get_list():
 def post_add():
     description = request.forms.get("description")
     # quantity = request.forms.get("quantity")
-    # try:
-    #    quantity = int(quantity)
-    # except:
-    #    quantity = 1
+    try:
+        quantity = int(quantity)
+    except:
+        quantity = 1
     # add_item(description, quantity)
     add_item(description)
     redirect('/list')
@@ -34,7 +34,7 @@ def get_edit(id):
     if len(items) != 1:
         redirect('/list')
     item_id, description = items[0]['id'], items[0]['description']
-    assert item_id == id
+    assert item_id == int(id)
     return template("edit_item.tpl", id=id, description=description)
 
 @post("/edit/<id>")
